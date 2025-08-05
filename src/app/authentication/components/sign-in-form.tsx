@@ -45,7 +45,10 @@ const SignInForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 md:min-w-96"
+      >
         <Card>
           <CardHeader>
             <CardTitle>Entrar</CardTitle>

@@ -1,7 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -22,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 
 const formSchema = z
   .object({
@@ -43,6 +46,8 @@ const formSchema = z
 type FormSchemaType = z.infer<typeof formSchema>;
 
 const SignUpForm = () => {
+  const route = useRouter();
+
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -53,13 +58,28 @@ const SignUpForm = () => {
     },
   });
 
-  function onSubmit(values: FormSchemaType) {
-    console.log(values);
+  async function onSubmit({ email, password, name }: FormSchemaType) {
+    await authClient.signUp.email({
+      email,
+      password,
+      name,
+      fetchOptions: {
+        onSuccess: () => {
+          route.push("/");
+        },
+        onError(ctx) {
+          toast.error(ctx.error.message);
+        },
+      },
+    });
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 md:min-w-96"
+      >
         <Card>
           <CardHeader>
             <CardTitle>Entrar</CardTitle>
