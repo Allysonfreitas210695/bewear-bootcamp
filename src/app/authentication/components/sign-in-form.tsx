@@ -1,7 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -22,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 
 const formSchema = z.object({
   email: z.email("E-mail inválido"),
@@ -31,6 +34,8 @@ const formSchema = z.object({
 type FormSchemaType = z.infer<typeof formSchema>;
 
 const SignInForm = () => {
+  const route = useRouter();
+
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,8 +44,36 @@ const SignInForm = () => {
     },
   });
 
-  function onSubmit(values: FormSchemaType) {
-    console.log(values);
+  async function onSubmit({ email, password }: FormSchemaType) {
+    await authClient.signIn.email({
+      email,
+      password,
+      fetchOptions: {
+        onSuccess: () => {
+          route.push("/");
+        },
+        onError(ctx) {
+          if (ctx?.error?.statusText === "UNAUTHORIZED") {
+            toast.error("Email ou senha inválido!");
+            form.setError("email", {
+              message: "Email ou senha inválido!",
+            });
+            form.setError("password", {
+              message: "Email ou senha inválido!",
+            });
+            return;
+          } else {
+            form.setError("email", {
+              message: "Email ou senha inválido!",
+            });
+            form.setError("password", {
+              message: "Email ou senha inválido!",
+            });
+            toast.error(ctx.error.message);
+          }
+        },
+      },
+    });
   }
 
   return (
@@ -88,7 +121,12 @@ const SignInForm = () => {
             />
           </CardContent>
           <CardFooter>
-            <Button type="submit">Entrar</Button>
+            <Button
+              type="submit"
+              className="cursor-pointer transition-colors duration-200"
+            >
+              Entrar
+            </Button>
           </CardFooter>
         </Card>
       </form>

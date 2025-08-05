@@ -149,7 +149,12 @@ const SignUpForm = () => {
             />
           </CardContent>
           <CardFooter>
-            <Button type="submit">Entrar</Button>
+            <Button
+              type="submit"
+              className="cursor-pointer transition-colors duration-200"
+            >
+              Entrar
+            </Button>
           </CardFooter>
         </Card>
       </form>
