@@ -597,6 +597,8 @@ async function main() {
             variantData.color as keyof (typeof productImages)[typeof productKey]
           ] || [];
 
+        const firstImage = variantImages[0] ?? "";
+
         console.log(`  🎨 Criando variante: ${variantData.color}`);
 
         await db.insert(productVariantTable).values({
@@ -604,7 +606,7 @@ async function main() {
           name: variantData.color,
           productId: productId,
           color: variantData.color,
-          imageUrl: variantImages,
+          imageUrl: firstImage,
           priceInCents: variantData.price,
           slug: generateSlug(`${productData.name}-${variantData.color}`),
         });
