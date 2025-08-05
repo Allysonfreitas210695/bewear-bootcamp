@@ -31,7 +31,7 @@ export default async function Home() {
             height={0}
             width={0}
             sizes="100vw"
-            className="h-full w-full"
+            className="h-auto w-full"
           />
         </div>
 
@@ -48,7 +48,7 @@ export default async function Home() {
             height={0}
             width={0}
             sizes="100vw"
-            className="h-full w-full"
+            className="h-auto w-full"
           />
         </div>
 
