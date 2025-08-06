@@ -2,6 +2,7 @@ import { desc } from "drizzle-orm";
 import Image from "next/image";
 
 import CategorySelector from "@/components/common/category-selector";
+import PartnerBrands from "@/components/common/partner-brands";
 import ProductList from "@/components/common/product-list";
 import { db } from "@/db";
 import { productTable } from "@/db/schema";
@@ -33,6 +34,10 @@ export default async function Home() {
             sizes="100vw"
             className="h-auto w-full"
           />
+        </div>
+
+        <div className="px-5">
+          <PartnerBrands title="Marcas parceiras" />
         </div>
 
         <ProductList title="Mais vendidos" products={products} />
