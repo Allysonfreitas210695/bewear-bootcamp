@@ -15,7 +15,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-import Card from "./card";
+import Cart from "./cart";
 
 const Header = () => {
   const { data: session } = authClient.useSession();
@@ -88,7 +88,7 @@ const Header = () => {
             </div>
           </SheetContent>
         </Sheet>
-        <Card />
+        <Cart />
       </div>
     </header>
   );
