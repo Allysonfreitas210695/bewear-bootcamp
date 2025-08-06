@@ -15,6 +15,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
+import Card from "./card";
 
 const Header = () => {
   const { data: session } = authClient.useSession();
@@ -22,7 +23,7 @@ const Header = () => {
   return (
     <header className="flex items-center justify-between p-6">
       <Image src={"/logo.svg"} alt="Bewear" width={100} height={26.14} />
-      <div className="flex items-center">
+      <div className="flex items-center gap-4">
         <Sheet>
           <SheetTrigger asChild>
             <Button
@@ -87,6 +88,7 @@ const Header = () => {
             </div>
           </SheetContent>
         </Sheet>
+        <Card />
       </div>
     </header>
   );
