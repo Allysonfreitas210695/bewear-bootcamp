@@ -44,6 +44,6 @@ export const decreaseCartProductQuantity = async (
 
   await db
     .update(cartItemTable)
-    .set({ quantity: cartItem.quantity + 1 })
+    .set({ quantity: cartItem.quantity - 1 })
     .where(eq(cartItemTable.id, cartItem.id));
 };
