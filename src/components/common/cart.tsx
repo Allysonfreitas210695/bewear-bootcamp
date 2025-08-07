@@ -43,6 +43,7 @@ const Cart = () => {
                   <CartItem
                     key={item.id}
                     id={item.id}
+                    productVariantId={item.productVariant.id}
                     productName={item.productVariant.product.name}
                     productVariantName={item.productVariant.name}
                     productVariantImageUrl={item.productVariant.imageUrl}
@@ -87,6 +88,5 @@ const Cart = () => {
     </Sheet>
   );
 };
-
 
 export default Cart;
